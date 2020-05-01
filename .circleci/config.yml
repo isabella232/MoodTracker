@@ -1,20 +1,20 @@
 version: 2.1
 
 orbs:
- android: circleci/android@0.2.0
+ android: circleci/android@0.2.1
 
 jobs:
   build:
     executor: android/android
     steps:
       - checkout
-      - restore-build-cache
+      - android/restore-build-cache
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies      
+      - android/save-build-cache
       - run:
           command: ./gradlew lint test
-      - save-build-cache
 
 workflows:
   build:
