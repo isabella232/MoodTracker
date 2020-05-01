@@ -6,11 +6,15 @@ orbs:
 jobs:
   build:
     executor: android/android
-        
     steps:
       - checkout
+      - restore-build-cache
       - run:
-          command: ./gradlew build
+          name: Download Dependencies
+          command: ./gradlew androidDependencies      
+      - run:
+          command: ./gradlew lint test
+      - save-build-cache
 
 workflows:
   build:
